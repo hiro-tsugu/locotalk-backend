@@ -1,21 +1,7 @@
 from flask import Blueprint, request, jsonify
-import pymysql
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from db_config import get_connection  # ← 修正点：pymysql ではなく db_config を使用
 
 municipality_bp = Blueprint('municipality_bp', __name__)
-
-def get_connection():
-    return pymysql.connect(
-        host=os.getenv("MYSQL_HOST"),
-        user=os.getenv("MYSQL_USER"),
-        password=os.getenv("MYSQL_PASSWORD"),
-        db=os.getenv("MYSQL_DATABASE"),
-        charset='utf8mb4',
-        cursorclass=pymysql.cursors.DictCursor
-    )
 
 @municipality_bp.route('/municipalities', methods=['GET'])
 def get_all_municipalities():
@@ -57,4 +43,3 @@ def get_municipality_by_id(id):
     finally:
         if cursor: cursor.close()
         if conn: conn.close()
-

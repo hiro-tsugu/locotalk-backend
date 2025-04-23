@@ -1,7 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
 name: Build and deploy Python app to Azure Web App - tech0-gen-8-step4-fus-backend
 
 on:
@@ -14,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # This is required for actions/checkout
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -35,7 +31,7 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Prepare deployment package
+      - name: Prepare deployment package (include certs)
         run: |
           mkdir deploy_temp
           rsync -av --exclude=venv/ ./ deploy_temp/
@@ -63,6 +59,19 @@ jobs:
 
       - name: Extract artifact
         run: unzip -o release.zip
+
+      - name: Ensure certs directory is placed correctly
+        run: |
+          if [ -d "certs" ]; then
+            mkdir -p certs_temp
+            cp -r certs/* certs_temp/
+            mkdir -p /home/site/wwwroot/certs
+            cp -r certs_temp/* /home/site/wwwroot/certs/
+            echo "✅ certs copied to wwwroot"
+          else
+            echo "❌ certs directory not found"
+            exit 1
+          fi
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
