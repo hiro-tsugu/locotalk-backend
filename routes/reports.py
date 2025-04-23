@@ -28,6 +28,7 @@ def get_reports():
         cursor.execute(query, (municipality_id,))
         rows = cursor.fetchall()
     except Exception as e:
+        print(f"❌ [reports.py] DB接続またはクエリエラー: {e}")
         return jsonify({'error': str(e)}), 500
     finally:
         cursor.close()

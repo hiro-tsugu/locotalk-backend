@@ -18,7 +18,7 @@ def generate_prompt(prefecture, city):
 以下は日本の自治体「{prefecture}{city}」に関する情報を返す形式です。
 
 # 出力形式:
-紹介文: 200次以内で自治体の特徴を細かく表現したわかりやすい紹介文。
+紹介文: 200字以内で自治体の特徴を細かく表現したわかりやすい紹介文。
 名産品:
 1. 名産品1
 2. 名産品2
@@ -54,6 +54,9 @@ def get_famous_info():
             "temperature": 0.7,
         },
     )
+
+    print(f"📩 ChatGPT ステータスコード: {chat_response.status_code}")
+    print(f"📩 ChatGPT レスポンス本文: {chat_response.text}")
 
     if chat_response.status_code != 200:
         return jsonify({'error': 'ChatGPT APIエラー'}), 500
@@ -94,6 +97,8 @@ def get_famous_info():
             json={"inputs": image_prompt}
         )
 
+        print(f"🖼 Hugging Face ステータスコード: {image_response.status_code}")
+
         if image_response.status_code == 200:
             timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
             filename = f"static/generated_{prefecture}_{city}_{timestamp}.png"
@@ -107,12 +112,12 @@ def get_famous_info():
         print(f"画像生成失敗: {e}")
 
     return Response(
-    json.dumps({
-        "name": f"{prefecture}{city}",
-        "description": description,
-        "specialties": specialties,
-        "sightseeing": sightseeing,
-        "image": image_url,
-    }, ensure_ascii=False),  # ← 日本語をエスケープしない
-    mimetype='application/json'
+        json.dumps({
+            "name": f"{prefecture}{city}",
+            "description": description,
+            "specialties": specialties,
+            "sightseeing": sightseeing,
+            "image": image_url,
+        }, ensure_ascii=False),
+        mimetype='application/json'
     )

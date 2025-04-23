@@ -30,6 +30,7 @@ def get_all_municipalities():
         result = cursor.fetchall()
         return jsonify(result), 200
     except Exception as e:
+        print(f"❌ [municipalities.py] DB接続エラー: {e}")
         return jsonify({'error': str(e)}), 500
     finally:
         if cursor: cursor.close()
