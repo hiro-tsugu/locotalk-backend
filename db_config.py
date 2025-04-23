@@ -13,6 +13,6 @@ def get_connection():
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor,
         ssl={
-            'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
+            'ca': os.path.join(os.getcwd(), 'BaltimoreCyberTrustRoot.crt.pem')
         }
     )
