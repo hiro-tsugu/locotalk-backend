@@ -1,0 +1,18 @@
+# Flaskとその拡張
+Flask==2.3.3
+Flask-Cors==4.0.0
+
+# MySQL接続用
+mysql-connector-python==8.1.0
+
+# OpenAI API（ChatGPTなど）
+openai==1.2.4
+
+# Hugging Face Spaces API呼び出し用
+requests==2.31.0
+
+# .envファイルからAPIキーなどを読み込む場合
+python-dotenv==1.0.1
+
+pymysql
+gunicorn
