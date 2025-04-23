@@ -93,5 +93,8 @@ def post_report():
         return jsonify({'error': str(e)}), 500
 
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'conn' in locals() and conn:
+            conn.close()
+
