@@ -15,7 +15,7 @@ def get_connection():
             password=os.getenv("MYSQL_PASSWORD"),
             database=os.getenv("MYSQL_DATABASE"),
             charset='utf8',
-            ssl_ca=ssl_cert_path,
+            ssl_ca = os.path.join(os.getcwd(), 'certs', 'BaltimoreCyberTrustRoot.crt.pem'),
             ssl_verify_cert=True
         )
         print("✅ DB接続成功")
