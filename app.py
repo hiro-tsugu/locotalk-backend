@@ -18,9 +18,9 @@ def index():
 # ファイルサイズの最大値設定（例：5MB）
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
-app.register_blueprint(municipality_bp)
-app.register_blueprint(report_bp)
-app.register_blueprint(famous_bp)
+app.register_blueprint(municipality_bp, url_prefix="/api")
+app.register_blueprint(report_bp, url_prefix="/api")
+app.register_blueprint(famous_bp, url_prefix="/api")
 
 print("✅ HF_API_KEY =", os.getenv("HF_API_KEY"))
 

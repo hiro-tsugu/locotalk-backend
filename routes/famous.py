@@ -1,6 +1,7 @@
 import os
 import requests
-from flask import Blueprint, request, jsonify
+import json
+from flask import Blueprint, request, jsonify, Response
 from datetime import datetime
 
 famous_bp = Blueprint('famous', __name__)
@@ -105,10 +106,13 @@ def get_famous_info():
     except Exception as e:
         print(f"画像生成失敗: {e}")
 
-    return jsonify({
+    return Response(
+    json.dumps({
         "name": f"{prefecture}{city}",
         "description": description,
         "specialties": specialties,
         "sightseeing": sightseeing,
         "image": image_url,
-    })
+    }, ensure_ascii=False),  # ← 日本語をエスケープしない
+    mimetype='application/json'
+    )
