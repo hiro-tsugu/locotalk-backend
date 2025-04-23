@@ -4,7 +4,7 @@ from datetime import datetime
 import base64
 import traceback
 
-report_bp = Blueprint('reports', __name__, url_prefix='/api')
+report_bp = Blueprint('reports', __name__)
 
 # レポート取得
 @report_bp.route('/reports', methods=['GET'])

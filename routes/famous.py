@@ -31,7 +31,7 @@ def generate_prompt(prefecture, city):
 では、{prefecture}{city}について上記の形式で出力してください。
 """.strip()
 
-@famous_bp.route('/api/famous', methods=['GET'])
+@famous_bp.route('/famous', methods=['GET'])
 def get_famous_info():
     prefecture = request.args.get('prefecture')
     city = request.args.get('city')
