@@ -6,7 +6,9 @@ load_dotenv()
 
 def get_connection():
     ssl_cert_path = os.path.join(os.getcwd(), 'BaltimoreCyberTrustRoot.crt.pem')
-    print("🔍 SSL証明書パス:", ssl_cert_path)  # ★ この行でパスを出力
+    
+    print("📂 現在の作業ディレクトリ:", os.getcwd())
+    print("🔍 証明書存在確認:", os.path.exists(ssl_cert_path))
 
     try:
         conn = mysql.connector.connect(
