@@ -1,13 +1,18 @@
-import mysql.connector
 import os
+import mysql.connector
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def get_connection():
-    # Azure 上のアプリルート固定パスを使用
-    ssl_cert_path = '/home/site/wwwroot/certs/BaltimoreCyberTrustRoot.crt.pem'
-    
+    # ローカル or Azure の判別用
+    is_azure = 'WEBSITE_INSTANCE_ID' in os.environ
+
+    if is_azure:
+        ssl_cert_path = '/home/site/wwwroot/certs/BaltimoreCyberTrustRoot.crt.pem'
+    else:
+        ssl_cert_path = os.path.join(os.getcwd(), 'certs', 'BaltimoreCyberTrustRoot.crt.pem')
+
     print("🔍 使用証明書ファイル:", ssl_cert_path)
     print("🔍 存在確認:", os.path.exists(ssl_cert_path))
 
@@ -26,4 +31,3 @@ def get_connection():
     except Exception as e:
         print("❌ DB接続エラー:", e)
         raise
-
