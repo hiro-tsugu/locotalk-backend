@@ -1,18 +1,16 @@
-import pymysql
+import mysql.connector
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def get_connection():
-    return pymysql.connect(
+    return mysql.connector.connect(
         host=os.getenv("MYSQL_HOST"),
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
-        db=os.getenv("MYSQL_DATABASE"),
-        charset='utf8mb4',
-        cursorclass=pymysql.cursors.DictCursor,
-        ssl={
-            'ca': os.path.join(os.getcwd(), 'BaltimoreCyberTrustRoot.crt.pem')
-        }
+        database=os.getenv("MYSQL_DATABASE"),
+        charset='utf8',
+        ssl_ca=os.path.join(os.getcwd(), 'BaltimoreCyberTrustRoot.crt.pem'),
+        ssl_verify_cert=True
     )
