@@ -35,7 +35,13 @@ jobs:
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip app.py db_config.py routes/ static/ templates/ certs/ requirements.txt -x "venv/*"
+        run: |
+          mkdir -p deploy_temp
+          cp -r * deploy_temp/
+          cp -r certs deploy_temp/
+          cd deploy_temp
+          zip -r ../release.zip .
+
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
