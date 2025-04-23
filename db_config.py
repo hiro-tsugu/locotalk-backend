@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_connection():
-    ssl_cert_path = os.path.join(os.getcwd(), 'BaltimoreCyberTrustRoot.crt.pem')
+    # Azure 上のアプリルート固定パスを使用
+    ssl_cert_path = '/home/site/wwwroot/certs/BaltimoreCyberTrustRoot.crt.pem'
     
-    print("📂 現在の作業ディレクトリ:", os.getcwd())
-    print("🔍 証明書存在確認:", os.path.exists(ssl_cert_path))
+    print("🔍 使用証明書ファイル:", ssl_cert_path)
+    print("🔍 存在確認:", os.path.exists(ssl_cert_path))
 
     try:
         conn = mysql.connector.connect(
@@ -17,11 +18,12 @@ def get_connection():
             password=os.getenv("MYSQL_PASSWORD"),
             database=os.getenv("MYSQL_DATABASE"),
             charset='utf8',
-            ssl_ca = os.path.join(os.getcwd(), 'certs', 'BaltimoreCyberTrustRoot.crt.pem'),
+            ssl_ca=ssl_cert_path,
             ssl_verify_cert=True
         )
         print("✅ DB接続成功")
         return conn
     except Exception as e:
-        print("❌ DB接続エラー:", e)  # ★ エラー詳細も出力
+        print("❌ DB接続エラー:", e)
         raise
+
