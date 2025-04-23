@@ -12,5 +12,7 @@ def get_connection():
         db=os.getenv("MYSQL_DATABASE"),
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor,
-        ssl={'ssl': {}}
+        ssl={
+            'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'
+        }
     )
