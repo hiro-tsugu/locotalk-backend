@@ -11,6 +11,10 @@ load_dotenv()  # ✅ 追加：ルートの .env を一度だけ読み込む
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
 
+@app.route("/")
+def index():
+    return "Locotalk backend is running on Azure!"
+
 # ファイルサイズの最大値設定（例：5MB）
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
