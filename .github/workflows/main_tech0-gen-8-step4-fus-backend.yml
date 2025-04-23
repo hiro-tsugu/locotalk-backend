@@ -35,7 +35,8 @@ jobs:
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "venv/*"
+        run: zip -r release.zip . certs -x "venv/*"
+
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -59,7 +60,8 @@ jobs:
           name: python-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip -d deploy_dist
+        run: unzip release.zip -d site
+
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -68,4 +70,4 @@ jobs:
           app-name: 'tech0-gen-8-step4-fus-backend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_420B71F9C817461385079145FAD6BE0E }}
-          package: deploy_dist
+          package: site
