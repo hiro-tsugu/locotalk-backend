@@ -59,8 +59,7 @@ jobs:
           name: python-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
-
+        run: unzip release.zip -d deploy_dist
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -69,3 +68,4 @@ jobs:
           app-name: 'tech0-gen-8-step4-fus-backend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_420B71F9C817461385079145FAD6BE0E }}
+          package: deploy_dist
