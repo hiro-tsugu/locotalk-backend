@@ -11,5 +11,6 @@ def get_connection():
         password=os.getenv("MYSQL_PASSWORD"),
         db=os.getenv("MYSQL_DATABASE"),
         charset='utf8mb4',
-        cursorclass=pymysql.cursors.DictCursor
+        cursorclass=pymysql.cursors.DictCursor,
+        ssl={'ssl': {}}
     )
